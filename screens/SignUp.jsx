@@ -1,5 +1,5 @@
 import React , {useContext, useEffect, useState} from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Keyboard } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Keyboard, ActivityIndicator } from 'react-native'
 import { AuthContext } from '../contexts/AuthProvider';
 
 export const SignUp = ({navigation}) => {
@@ -7,6 +7,10 @@ export const SignUp = ({navigation}) => {
   const [show, setShow] = useState(true)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConf, setPasswordConf] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+
   const auth = useContext(AuthContext)
 
   useEffect(() => {
@@ -22,8 +26,44 @@ export const SignUp = ({navigation}) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (auth.authUsernameError) {
+      setUsernameError(auth.authUsernameError)
+    }
+
+    if (auth.authPasswordError) {
+      setPasswordError(auth.authPasswordError)
+    }
+  }, [auth.authUsernameError, auth.authPasswordError])
+  
+
   const handleSignUp = () => {
-    auth.register(username, password)
+    let error = false;
+    if (!username) {
+      setUsernameError('Username must be exist!')
+      setUsername('')
+      error = true;
+    }
+    
+    if (!password) {
+      setPasswordError('Password must be exist!');
+      setPassword('')
+      setPasswordConf('')
+
+      error = true;
+    }
+    
+    if (password !== passwordConf) {
+      setPasswordError('Passwords must be matched!');
+      setPassword('')
+      setPasswordConf('')
+      error = true;
+
+    } 
+    
+    if(!error && !auth.registerLoading) auth.register(username, password)
+    
+
   }
 
   return (
@@ -34,30 +74,49 @@ export const SignUp = ({navigation}) => {
         </Text>
         <View style={styles.inputBox}>
        
-          <TextInput style={styles.input} textContentType="username" onChangeText={text => setUsername(text)}
-            defaultValue={username}
-            placeholder='Username' />
+          <TextInput
+            style={usernameError ? styles.errorInput : styles.input}
+            
+            textContentType="username"
+            onChangeText={text => {
+              setUsernameError('')
+              setUsername(text)
+            }}
+            value={!usernameError ? username : ''}
+            placeholder={usernameError || 'Username'} />
+
         </View>
         
         <View style={styles.inputBox}>
      
-          <TextInput style={styles.input}
-            placeholder='Password'
-            onChangeText={text => setPassword(text)}
-            defaultValue={password}
+          <TextInput style={passwordError ? styles.errorInput : styles.input}
+            
+            placeholder={passwordError || 'Password'}
+            onChangeText={text => {
+              setPasswordError('')
+              setPassword(text)
+            }}
+            value={!passwordError ? password : ''}
             secureTextEntry={true} />
         </View>
 
         <View style={styles.inputBox}>
           
-          <TextInput style={styles.input}
-            placeholder='Password again'
+          <TextInput style={ passwordError ? styles.errorInput : styles.input}
+            value={!passwordError ? passwordConf : ''}
+            onChangeText={(text) => {
+              setPasswordError('')
+              setPasswordConf(text)
+            }}
+            onFocus = {() => setPasswordError('')}
+            placeholder={passwordError || 'Password again'}
             secureTextEntry={true} />
         </View>
         <TouchableOpacity
           onPress={handleSignUp}
           style={styles.signUpButton}>
-          <Text style={styles.signUpButtonText}> Sign up </Text>
+          { auth.registerLoading ? <ActivityIndicator  size='large' color='#000' /> : <Text style={styles.signUpButtonText}> Sign up </Text>}
+          
         </TouchableOpacity>
        
       </View>
@@ -103,6 +162,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: '#D2544A'
   },
+  errorInput: {
+    width: "100%",
+    backgroundColor: "transparent",
+    padding: 12,
+    marginTop: 16,
+    fontSize: 16,
+    borderBottomWidth: 2,
+    borderBottomColor: '#292b2c'
+  },
   inputBox: {
     width: "100%",
     marginBottom: 16
@@ -113,11 +181,12 @@ const styles = StyleSheet.create({
   signUpButton: {
     backgroundColor: "#fff",
     width: "100%",
-
+    justifyContent: 'center',
     marginTop: 16,
     paddingVertical: 10,
     borderRadius: 8,
     marginBottom: 64,
+    height: 60,
     
   },
   signUpButtonText: {
