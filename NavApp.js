@@ -1,59 +1,45 @@
 import { NavigationContainer, ThemeProvider } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Icon from 'react-native-vector-icons/AntDesign';
 import React, { useContext } from 'react'
 import { Text, StatusBar, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { AuthContext } from './contexts/AuthProvider'
 import { Home } from './screens/Home';
 import { Login } from './screens/Login';
 import { SignUp } from './screens/SignUp';
+import { SettingsScreen } from './screens/SettingsScreen';
+import { HomeTabs } from './HomeTabs';
 
 export const NavApp = () => {
     const auth = useContext(AuthContext)
   const Stack = createNativeStackNavigator();
-  const exit = <Icon name="logout" size={30} color="#fff" />;
-
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+    >
       <Stack.Navigator>
-
       
-        {
+      {
           auth.user ? <>
+            
             <Stack.Screen
-              name="Home"
-              component={Home}
-              
+              name='Home'
+              component={HomeTabs}
               options={{
-                title: 'Home',
-                headerTintColor:'#fff',
-                headerTitleStyle: {
-                  color:'#fff'
-                },  
-                headerStyle: {
-                  backgroundColor: '#e65c4f',
-                },
-                headerRight: () => (
-                  <TouchableOpacity
-                  onPress={auth.signOut}
-                  >
-                    {exit}
-                  </TouchableOpacity>
-                   
-                ),
+                headerShown: false,
               }}
-
             />
+        </> :
+          <>
+            
 
-          </> :
-            <>
               <Stack.Screen
                 name="Login"
                 component={Login}
                 options={{
                   title: 'Login',
-                  headerTintColor:'#fff',
+                  headerTintColor: '#fff',
                   headerBackTitleStyle: {
                     color: '#fff'
                   },
@@ -72,7 +58,7 @@ export const NavApp = () => {
                 component={SignUp}
                 options={{
                   title: 'Sign Up',
-                  headerTintColor:'#fff',
+                  headerTintColor: '#fff',
                   headerTitleStyle: {
                     color: '#fff'
                   },
@@ -82,11 +68,11 @@ export const NavApp = () => {
                   headerShadowVisible: false
                 }}
               />
+            
           </>
           
 
       }
-
       </Stack.Navigator>
     </NavigationContainer>
   );
