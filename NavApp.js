@@ -1,14 +1,11 @@
 import { NavigationContainer, ThemeProvider } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useContext } from 'react'
-import { Text, StatusBar, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {StyleSheet} from 'react-native'
 
 import { AuthContext } from './contexts/AuthProvider'
-import { Home } from './screens/Home';
 import { Login } from './screens/Login';
 import { SignUp } from './screens/SignUp';
-import { SettingsScreen } from './screens/SettingsScreen';
 import { HomeTabs } from './HomeTabs';
 
 export const NavApp = () => {

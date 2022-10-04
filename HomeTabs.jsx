@@ -9,8 +9,11 @@ export const HomeTabs = () => {
 
   return (
     <Tab.Navigator
-            
-            screenOptions={({ route }) => ({
+    tabBarOptions={{
+      keyboardHidesTabBar: true
+   }}  
+      screenOptions={({ route }) => ({
+              
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
   
