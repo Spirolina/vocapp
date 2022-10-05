@@ -13,7 +13,7 @@ export const useDictionary = () => {
             axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
                 .then(res => {
                     setLoading(false);
-                    setWords(res.data);
+                    setWords(res.data[0].meanings);
                 })
                 .catch(err => {
                     setLoading(false);
