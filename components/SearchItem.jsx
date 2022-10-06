@@ -18,6 +18,7 @@ const SearchItem = ({ word, partOfSpeech, definition, example, navigation }) => 
       </View>
       
       <Text style={styles.definition}> {definition} </Text>
+      
     </TouchableOpacity>
   );
 };
