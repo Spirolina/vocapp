@@ -2,10 +2,10 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Search } from '../components/Search'
 
-export const Home = () => {
+export const Home = ({navigation}) => {
   return (
       <View style={styles.container}>
-        <Search />
+      <Search navigation={navigation} />
     </View>
   )
 }

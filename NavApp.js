@@ -7,6 +7,7 @@ import { AuthContext } from './contexts/AuthProvider'
 import { Login } from './screens/Login';
 import { SignUp } from './screens/SignUp';
 import { HomeTabs } from './HomeTabs';
+import WordEdit from './screens/WordEdit';
 
 export const NavApp = () => {
     const auth = useContext(AuthContext)
@@ -27,6 +28,23 @@ export const NavApp = () => {
                 headerShown: false,
               }}
             />
+
+        <Stack.Screen
+              name='WordEdit'
+              component={WordEdit}
+              options={{
+                title: 'Word Edit',
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  color: '#fff'
+                },
+                headerStyle: {
+                  backgroundColor: '#e65c4f',
+                },
+                headerShadowVisible: false
+
+              }}
+            />
         </> :
           <>
             
@@ -38,9 +56,6 @@ export const NavApp = () => {
                   title: 'Login',
                   headerTintColor: '#fff',
                   headerBackTitleStyle: {
-                    color: '#fff'
-                  },
-                  headerTitleStyle: {
                     color: '#fff'
                   },
                   headerStyle: {

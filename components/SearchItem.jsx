@@ -1,10 +1,16 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-const SearchItem = ({ word, partOfSpeech, definition }) => {
+const SearchItem = ({ word, partOfSpeech, definition, example, navigation }) => {
   return (
     <TouchableOpacity
-    style={styles.container}
+      style={styles.container}
+      onPress={() => navigation.navigate('WordEdit', {
+        word,
+        partOfSpeech,
+        definition,
+        example
+      })}
     >
       <View style={styles.title}>
         <Text style={styles.word}> {word} </Text>

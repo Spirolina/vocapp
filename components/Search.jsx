@@ -6,14 +6,17 @@ import SearchItem from './SearchItem';
 
 
 
-export const Search = () => {
+export const Search = ({navigation}) => {
     const [word, setWord] = useState('');
     const search = <Ionicons name="search" size={30} color="#e65c4f" />;
     const { getDictionary, loading, words } = useDictionary();
     const searhItems = words.map(myWord => <SearchItem
         word={word}
+        navigation={navigation}
         partOfSpeech={myWord.partOfSpeech}
         definition={myWord.definitions[0].definition}
+        example={myWord.definitions[0].example}
+
     />)
 
     useEffect(() => {
