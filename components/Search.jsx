@@ -10,7 +10,8 @@ export const Search = ({navigation}) => {
     const [word, setWord] = useState('');
     const search = <Ionicons name="search" size={30} color="#e65c4f" />;
     const { getDictionary, loading, words } = useDictionary();
-    const searhItems = words.map(myWord => <SearchItem
+    const searhItems = words.map((myWord, index)=> <SearchItem
+        key={index}
         word={word}
         navigation={navigation}
         partOfSpeech={myWord.partOfSpeech}

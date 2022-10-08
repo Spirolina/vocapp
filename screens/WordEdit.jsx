@@ -11,10 +11,12 @@ const WordEdit = ({ route, navigation }) => {
     const [myWord, setMyWord] = useState(word);
     const [myPos, setMyPos] = useState(partOfSpeech);
     const [myDef, setMyDef] = useState(definition);
+    const [imageBase64, setImageBase64] = useState(null);
 
     return (
         <View style={styles.container}>
             <ScrollView
+                keyboardShouldPersistTaps='handled'
                 style={styles.word}
             >
                 
@@ -33,7 +35,10 @@ const WordEdit = ({ route, navigation }) => {
                     setExamples={setExamples}
                 />
 
-                <WordImage />
+                <WordImage
+                    imageBase64={imageBase64}
+                    setImageBase64={setImageBase64}
+                />
 
                 
 
@@ -60,9 +65,8 @@ const styles = StyleSheet.create({
     word: {
         backgroundColor: '#e65c4f',
         padding: 16,
-        borderBottomLeftRadius: 48,
-        borderBottomRightRadius: 48,
-        
+        paddingBottom: 32,
+    
     },
 
     addButton: {
@@ -71,13 +75,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 10,
         height: 60,
+
     },
 
     addButtonText: {
         textAlign: 'center',
         color: 'black',
         fontWeight: 'bold',
-        fontSize: 24
+        fontSize: 24,
     }
 })
 

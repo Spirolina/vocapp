@@ -3,11 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-export const Example = ({ example, setExamples, handleExample }) => {
+export const Example = ({ example, setExamples, handleExample, handleDelete }) => {
     const [currentExample, setCurrentExample] = useState(example.text)
    
     const handleSave = () => {
-        handleExample(example, currentExample);
+        handleExample(example, currentExample, false);
+    }
+
+    const handleEdit = () => {
+        handleExample(example, currentExample, true);
     }
 
     if (example.edit)
@@ -44,10 +48,19 @@ export const Example = ({ example, setExamples, handleExample }) => {
                 {example.text}
               
             </Text>
+
             <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => handleDelete(example.id)}
+            >
+                <Icon name='delete' size={25} color='#e65c4f' />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={handleEdit}
                 style={styles.editButton}
             >
-                <Feather name='edit' size={25} color='#fff' />
+                <Feather name='edit' size={25} color='#e65c4f' />
             </TouchableOpacity>
 
 
@@ -67,7 +80,8 @@ const styles = StyleSheet.create({
     },
     exampleText: {
         fontSize: 16,
-        color: '#fff'
+        color: '#fff',
+        marginVertical: 32,
     },
     exampleInput: {
         backgroundColor: '#e65c4f',
@@ -78,14 +92,27 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     input: {
+        fontSize: 16,
+        color: '#fff',
         width: '100%'
     },
     editButton: {
         position: 'absolute',
-        top: 5,
-        right: 5
+        top: 0,
+        right: 0,
+        backgroundColor: '#fff',
+        padding: 4,
+        borderBottomLeftRadius: 8,
     }, 
     saveButton: {
         marginLeft: 'auto'
+    },
+    deleteButton: {
+        position: 'absolute',
+        bottom:0 ,
+        right: 0,
+        backgroundColor: '#fff',
+        padding: 4,
+        borderTopLeftRadius: 8,
     }
 })
