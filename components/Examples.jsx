@@ -45,7 +45,12 @@ export const Examples = ({ examples, setExamples }) => {
                     <Text style={styles.examplesTitle}> examples </Text>
           {examples.length > 0
               ?
-              examples.map(example => <Example example={example} key={example.id} handleExample={handleExample} handleDelete={handleDelete} />)
+              examples.map(example => <Example
+                  example={example}
+                  key={example.id}
+                  handleExample={handleExample}
+                  handleDelete={handleDelete}
+              />)
               :
               <Text> There is no example </Text>}
           

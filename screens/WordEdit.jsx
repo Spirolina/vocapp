@@ -4,6 +4,7 @@ import Definition from '../components/Definition'
 import { Examples } from '../components/Examples'
 import { WordImage } from '../components/WordImage'
 import WordTitle from '../components/WordTitle'
+import { useWord } from '../hooks/useWord'
 
 const WordEdit = ({ route, navigation }) => {
     const { word, partOfSpeech, definition, example } = route.params
@@ -12,6 +13,19 @@ const WordEdit = ({ route, navigation }) => {
     const [myPos, setMyPos] = useState(partOfSpeech);
     const [myDef, setMyDef] = useState(definition);
     const [imageBase64, setImageBase64] = useState(null);
+    const { getWord, loading, error } = useWord();
+
+    const handleAdd = () => {
+        const myExamples = examples.map(ex => ex.text);
+
+        getWord({
+            word, 
+            partOfSpeech,
+            myDef,
+            examples: myExamples,
+            imageData: imageBase64,
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -45,6 +59,7 @@ const WordEdit = ({ route, navigation }) => {
             </ScrollView>
             <TouchableOpacity
                 style={styles.addButton}
+                onPress={handleAdd}
                 >
                     <Text
                     style={styles.addButtonText}
