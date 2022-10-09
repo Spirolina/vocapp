@@ -3,12 +3,11 @@ import { View, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'reac
 import Feather from 'react-native-vector-icons/Feather';
 import * as ImagePicker from 'expo-image-picker';
 
-export const WordImage = ({imageBase64, setImageBase64}) => {
-    const [image, setImage] = useState(null);
+export const WordImage = ({imgUri, setImgUri, imgId, setImgId}) => {
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
-            base64: true,
+            base64: false,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
@@ -16,8 +15,8 @@ export const WordImage = ({imageBase64, setImageBase64}) => {
        
 
         if (!result.cancelled) {
-            setImage(result.uri);
-            setImageBase64(result.base64)
+            console.log(result)
+            setImgUri(result.uri);
         }
     };
 
@@ -27,7 +26,7 @@ export const WordImage = ({imageBase64, setImageBase64}) => {
             style={styles.container}
         >  
             <ImageBackground
-                source={ image ? {uri: image} : require('../assets/default-word-image.png') }
+                source={ imgUri ? {uri: imgUri} : require('../assets/default-word-image.png') }
                 style={styles.image}
             >
                 

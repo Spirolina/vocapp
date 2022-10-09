@@ -12,7 +12,8 @@ const WordEdit = ({ route, navigation }) => {
     const [myWord, setMyWord] = useState(word);
     const [myPos, setMyPos] = useState(partOfSpeech);
     const [myDef, setMyDef] = useState(definition);
-    const [imageBase64, setImageBase64] = useState(null);
+    const [imgUri, setImgUri] = useState(null);
+    const [imgId, setImgId] = useState('')
     const { getWord, loading, error } = useWord();
 
     const handleAdd = () => {
@@ -21,9 +22,9 @@ const WordEdit = ({ route, navigation }) => {
         getWord({
             word, 
             partOfSpeech,
-            myDef,
+            definition: myDef,
             examples: myExamples,
-            imageData: imageBase64,
+            imgUri,
         })
     }
 
@@ -50,8 +51,10 @@ const WordEdit = ({ route, navigation }) => {
                 />
 
                 <WordImage
-                    imageBase64={imageBase64}
-                    setImageBase64={setImageBase64}
+                    imgUri={imgUri}
+                    setImgUri={setImgUri}
+                    imgId={imgId}
+                    setImgId={setImgId}
                 />
 
                 
