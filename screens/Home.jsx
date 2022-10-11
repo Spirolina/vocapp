@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Search } from '../components/Search'
+import WordStats from '../components/WordStats'
 
 export const Home = ({navigation}) => {
   return (
@@ -15,7 +16,6 @@ const styles = StyleSheet.create({
   container: {
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#eaeff3'
+         flex:1,
     }
 })

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Keyboard } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDictionary } from '../hooks/useDictionary';
 import SearchItem from './SearchItem';
+import WordStats from './WordStats';
 
 
 
 export const Search = ({navigation}) => {
     const [word, setWord] = useState('');
+    const [show, setShow] = useState(true)
     const search = <Ionicons name="search" size={30} color="#e65c4f" />;
     const { getDictionary, loading, words } = useDictionary();
     const searhItems = words.map((myWord, index)=> <SearchItem
@@ -21,21 +23,26 @@ export const Search = ({navigation}) => {
     />)
 
     useEffect(() => {
+        const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+          setShow(false);
+        });
+        const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+          setShow(true) })
+    
+        return () => {
+          showSubscription.remove();
+          hideSubscription.remove();
+        };
+      }, []);
+    useEffect(() => {
         getDictionary(word);
     },[word])
 
     return (
         <View style={styles.container}>
-           
-            <ScrollView
-                keyboardShouldPersistTaps='handled'
-                stickyHeaderIndices={[0]}
-                style={styles.searchItems}
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.searchBox}>
+            <View style={styles.searchBox}>
 
-                    <View style={styles.barContainer}>
+                <View style={styles.barContainer}>
                     <TextInput
                         onChangeText={(text) => setWord(text)}
                         value={word}
@@ -48,18 +55,26 @@ export const Search = ({navigation}) => {
                         {search}
                     </TouchableOpacity>
                 </View>
-                    
-                </View>
-                
-                {word.length > 0 ? searhItems : null}
 
-            </ScrollView>
+            </View>
+            {word.length > 0 ?<ScrollView
+                keyboardShouldPersistTaps='handled'
+                style={styles.searchItems}
+                showsVerticalScrollIndicator={false}
+
+            >
+                
+                
+                { searhItems}
+
+            </ScrollView> : show ? <WordStats /> : null}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         width: '100%',
     },
     barContainer: {
@@ -79,7 +94,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
     },
     searchBox: {
-        
         alignItems: 'center',
         flexDirection: 'row',
         backgroundColor: '#e65c4f',
@@ -101,7 +115,6 @@ const styles = StyleSheet.create({
     },
     searchItems: {
         width: '100%',
-
-        
+        minHeight: 0,
     }
 })
