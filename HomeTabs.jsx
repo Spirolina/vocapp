@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Home } from './screens/Home';
 import { SettingsScreen } from './screens/SettingsScreen';
+import { MyWords } from './screens/MyWords';
 
 export const HomeTabs = () => {
     const Tab = createBottomTabNavigator();
@@ -23,6 +24,9 @@ export const HomeTabs = () => {
                   : 'home-outline';
               } else if (route.name === 'Settings') {
                 iconName = focused ? 'settings' : 'settings-outline';
+              } else if (route.name === 'My Words') {
+                iconName = focused ? 'library' : 'library-outline';
+
               }
   
               // You can return any component that you like here!
@@ -36,6 +40,15 @@ export const HomeTabs = () => {
             <Tab.Screen
               name="Home"
               component={Home}
+              
+              options={{
+                headerShown: false,
+              }}
+
+      />
+      <Tab.Screen
+              name="My Words"
+              component={MyWords}
               
               options={{
                 headerShown: false,

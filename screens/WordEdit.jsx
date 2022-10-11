@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native'
 import Definition from '../components/Definition'
 import { Examples } from '../components/Examples'
 import { WordImage } from '../components/WordImage'
@@ -16,9 +16,21 @@ const WordEdit = ({ route, navigation }) => {
     const [imgId, setImgId] = useState('')
     const { getWord, loading, error } = useWord();
 
+    useEffect(() => {
+        if (error) {
+             Alert.alert(
+      "Error",
+      error,
+      [
+        
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+        }
+    },[error])
+
     const handleAdd = () => {
         const myExamples = examples.map(ex => ex.text);
-
         getWord({
             word, 
             partOfSpeech,
@@ -64,10 +76,12 @@ const WordEdit = ({ route, navigation }) => {
                 style={styles.addButton}
                 onPress={handleAdd}
                 >
-                    <Text
+                {loading
+                    ? <ActivityIndicator size='large' color='#000' />
+                    : <Text
                     style={styles.addButtonText}
                     > Add
-                    </Text>
+                    </Text>}
                 </TouchableOpacity>
         </View>
     );

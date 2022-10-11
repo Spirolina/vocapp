@@ -12,27 +12,21 @@ export const WordImage = ({imgUri, setImgUri, imgId, setImgId}) => {
             aspect: [4, 3],
             quality: 1,
         });
-       
 
         if (!result.cancelled) {
-            console.log(result)
             setImgUri(result.uri);
         }
     };
 
     return (
-      
         <View
             style={styles.container}
-        >  
+        >
             <ImageBackground
                 source={ imgUri ? {uri: imgUri} : require('../assets/default-word-image.png') }
                 style={styles.image}
             >
-                
-                    
 
-            
                 <TouchableOpacity
                     onPress={pickImage}
             style={styles.editButton}
@@ -52,8 +46,6 @@ const styles = StyleSheet.create({
         marginTop: 8,
         borderRadius: 8,
         overflow: "hidden",
-        
-
     },
     image: {
         flex: 1,
@@ -63,7 +55,6 @@ const styles = StyleSheet.create({
         height: "100%",
         resizeMode: "cover",
     },
- 
     editButton: {
         backgroundColor: 'rgba(230, 92, 79, 0.5)',
         borderRadius: 50,

@@ -14,6 +14,8 @@ export const useWord = () => {
 
     useEffect(() => {
         if (word) {
+            setError(false)
+            setLoading(true);
             if (word.imgUri) {
                 const fileId = uuid.v4();
                 const file = {
@@ -41,18 +43,45 @@ export const useWord = () => {
                         },
                             {
                                 headers: {
-                                'Authorization': auth.token
+                                    'Authorization': '32423423'
                             }}
                         )
                         .then(res => {
                             console.log(res.data)
+
+                            setLoading(false);
+
                         })
                         .catch(err => {
-                            console.log(err)
+
+                            setError(err.response.data.msg)
+                            setLoading(false);
                         });
 
                 });
+                return;
             };
+            console.log(word)
+
+            axios
+                .post(`${API_URL}/api/words/add`, {
+                            ...word
+                        },
+                            {
+                                headers: {
+                                    'Authorization': '32423423'
+                            }}
+                        )
+                        .then(res => {
+                            console.log(res)
+                            setLoading(false);
+
+
+                        })
+                .catch(err => {
+                            setError(err.response.data)
+                            setLoading(false);
+                        });
         };
     }, [word]);
 
