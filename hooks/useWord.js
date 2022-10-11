@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {API_URL} from "@env"
 import axios from 'axios';
 import { RNS3 } from 'react-native-aws3';
 import uuid from 'react-native-uuid';
+import { AuthContext } from '../contexts/AuthProvider';
 
 
 export const useWord = () => {
     const [word, setWord] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    
-    
-    
-       
+    const auth = useContext(AuthContext);
 
     useEffect(() => {
         if (word) {
@@ -23,7 +21,6 @@ export const useWord = () => {
                     name: fileId,
                     type: "image/png"
                 }
-
                 const options = {
                     keyPrefix: "uploads/",
                     bucket: "vocapp-spiriolina",
@@ -31,18 +28,22 @@ export const useWord = () => {
                     accessKey: "AKIAQLWKAH4YCVCIKLCX",
                     secretKey: "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",
                     successActionStatus: 201
-                  }
+                };
 
                 RNS3.put(file, options).then(response => {
                     if (response.status !== 201)
                         throw new Error("Failed to upload image to S3");
                     console.log(response.body);
                     const imageUri = `s3://vocapp-spiriolina/uploads/${fileId}`
-                    
                     axios
                         .post(`${API_URL}/api/words/add`, {
                             ...word, imageUri,
-                        })
+                        },
+                            {
+                                headers: {
+                                'Authorization': auth.token
+                            }}
+                        )
                         .then(res => {
                             console.log(res.data)
                         })
@@ -50,21 +51,16 @@ export const useWord = () => {
                             console.log(err)
                         });
 
-                })
-                
-            }
-        
-            
-        }
-            
-    },[word])
-  
+                });
+            };
+        };
+    }, [word]);
 
     return {
-        getWord: (myWord) => { 
+        getWord: (myWord) => {
             setWord(myWord)
         },
-        loading, 
+        loading,
         error
     }
 }
