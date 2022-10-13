@@ -11,8 +11,11 @@ export const AuthProvider = ({ children }) => {
   const [registerLoading, setRegisterLoading] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const [usernameError, setusernameError] = useState('')
-  const [passwordError, setPasswordError] = useState(''); 
-  
+  const [passwordError, setPasswordError] = useState('');
+  const [wordsLoading, setWordsLoading] = useState(false);
+  const [wordsError, setWordsError] = useState('')
+  const [words, setWords] = useState([]);
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,18 +26,41 @@ export const AuthProvider = ({ children }) => {
       if (tokenStr && userStr) {
         setUser(JSON.parse(userStr))
         setToken(JSON.parse(tokenStr))
-      }   
+      }
     };
-    
+
     try {
       fetchUser();
-    } catch(e) {
+    } catch (e) {
       console.log(e)
-    } 
+    }
 
-  }, [])
-  
-  
+  }, []);
+
+  useEffect(() => {
+    getWords();
+  }, [token]);
+
+  const getWords = () => {
+    if (token) {
+      setWordsLoading(true);
+      axios
+        .get(`${API_URL}/api/words/all`, {
+          headers: {
+            'Authorization': token.token,
+          }
+        })
+        .then(res => {
+          setWords(res.data.words);
+          setWordsLoading(false);
+        })
+        .catch(err => {
+          setWordsError(err.response.data.msg);
+          setWordsLoading(false);
+        })
+    }
+  }
+
   const login = (username, password) => {
     setPasswordError('');
     setusernameError('');
@@ -121,7 +147,11 @@ export const AuthProvider = ({ children }) => {
     registerLoading,
     authUsernameError: usernameError,
     authPasswordError: passwordError,
-    loginLoading
+    loginLoading,
+    words,
+    wordsError,
+    wordsLoading,
+    getWords
   }
   return (
     <AuthContext.Provider value={value}>

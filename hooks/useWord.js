@@ -6,7 +6,7 @@ import uuid from 'react-native-uuid';
 import { AuthContext } from '../contexts/AuthProvider';
 
 
-export const useWord = () => {
+export const useWord = ({navigation}) => {
     const [word, setWord] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -43,7 +43,7 @@ export const useWord = () => {
                         },
                             {
                                 headers: {
-                                    'Authorization': '32423423'
+                                    'Authorization': auth.token
                             }}
                         )
                         .then(res => {
@@ -69,12 +69,13 @@ export const useWord = () => {
                         },
                             {
                                 headers: {
-                                    'Authorization': '32423423'
+                                    'Authorization': auth.token
                             }}
                         )
                         .then(res => {
-                            console.log(res)
                             setLoading(false);
+                            auth.getWords()
+                            navigation.navigate('My Words')
 
 
                         })

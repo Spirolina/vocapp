@@ -14,7 +14,7 @@ const WordEdit = ({ route, navigation }) => {
     const [myDef, setMyDef] = useState(definition);
     const [imgUri, setImgUri] = useState(null);
     const [imgId, setImgId] = useState('')
-    const { getWord, loading, error } = useWord();
+    const { getWord, loading, error } = useWord({navigation});
 
     useEffect(() => {
         if (error) {
