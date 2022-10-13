@@ -35,11 +35,9 @@ export const useWord = ({navigation}) => {
                 RNS3.put(file, options).then(response => {
                     if (response.status !== 201)
                         throw new Error("Failed to upload image to S3");
-                    console.log(response.body);
-                    const imageUri = `s3://vocapp-spiriolina/uploads/${fileId}`
                     axios
                         .post(`${API_URL}/api/words/add`, {
-                            ...word, imageUri,
+                            ...word, imageUri: response.body.postResponse.location,
                         },
                             {
                                 headers: {
@@ -48,7 +46,8 @@ export const useWord = ({navigation}) => {
                         )
                         .then(res => {
                             console.log(res.data)
-
+                            auth.getWords()
+                            navigation.navigate('My Words')
                             setLoading(false);
 
                         })

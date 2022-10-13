@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Keyboard } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Keyboard, ActivityIndicator } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDictionary } from '../hooks/useDictionary';
 import SearchItem from './SearchItem';
@@ -21,6 +21,7 @@ export const Search = ({navigation}) => {
         example={myWord.definitions[0].example}
 
     />)
+    console.log(words)
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
@@ -57,7 +58,7 @@ export const Search = ({navigation}) => {
                 </View>
 
             </View>
-            {word.length > 0 ?<ScrollView
+            {word.length > 0 ? loading ? <ActivityIndicator style={{marginTop: 64}} size={64} /> : <ScrollView
                 keyboardShouldPersistTaps='handled'
                 style={styles.searchItems}
                 showsVerticalScrollIndicator={false}
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
+        
     },
     barContainer: {
         flexDirection: 'row',

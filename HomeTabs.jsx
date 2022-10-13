@@ -50,8 +50,13 @@ export const HomeTabs = () => {
               name="My Words"
               component={MyWords}
               
-              options={{
-                headerShown: false,
+        options={{
+                
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#e65c4f',
+          },
+          headerTintColor: '#fff'
               }}
 
             />
@@ -62,6 +67,10 @@ export const HomeTabs = () => {
               
               options={{
                 headerShown: false,
+                headerStyle: {
+                  backgroundColor: '#e65c4f',
+                }
+                
               }}
 
             />
