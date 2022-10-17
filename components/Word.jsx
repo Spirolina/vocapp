@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
 
-const Word = ({ word, image }) => {
-
+const Word = ({ word, image, partOfSpeech, handlePress, learned, _id }) => {
+    
     return (
-        <View
+        <TouchableOpacity
+            onPress={() => handlePress(_id)}
             style={styles.container}
         >
 
@@ -20,12 +21,17 @@ const Word = ({ word, image }) => {
                 >
                     <Text
                     style={styles.word}>
-                        {word}
+                        {word} 
+                    </Text>
+                    <Text
+                    style={styles.word}
+                    >
+                    ({partOfSpeech})
                     </Text>
                 </View>
           
             </ImageBackground>
-        </View>
+        </TouchableOpacity>
 
     );
 }

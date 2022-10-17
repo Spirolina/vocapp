@@ -8,6 +8,7 @@ import { Login } from './screens/Login';
 import { SignUp } from './screens/SignUp';
 import { HomeTabs } from './HomeTabs';
 import WordEdit from './screens/WordEdit';
+import WordRevising from './screens/WordRevising';
 
 export const NavApp = () => {
     const auth = useContext(AuthContext)
@@ -34,6 +35,23 @@ export const NavApp = () => {
               component={WordEdit}
               options={{
                 title: 'Word Edit',
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  color: '#fff'
+                },
+                headerStyle: {
+                  backgroundColor: '#e65c4f',
+                },
+                headerShadowVisible: false
+
+              }}
+            />
+
+<Stack.Screen
+              name='WordRevise'
+              component={WordRevising}
+              options={{
+                title: 'Word Revise',
                 headerTintColor: '#fff',
                 headerTitleStyle: {
                   color: '#fff'

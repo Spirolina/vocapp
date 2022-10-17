@@ -19,8 +19,21 @@ export const MyWords = ({navigation}) => {
           ),
         });
     }, [navigation]);
-    console.log(auth.words)
 
+    const handlePress = (_id) => {
+        let currentId = 0
+        for (let i = 0; i < auth.words.length; i++) {
+            if (auth.words[i]._id === _id) {
+                currentId = i;
+                break;
+            }
+        }
+
+        navigation.navigate('WordRevise', {
+            currentId,
+            words: auth.words
+        })
+    }
     return (
         <SafeAreaView
             style={styles.container}
@@ -37,7 +50,16 @@ export const MyWords = ({navigation}) => {
                             style={styles.flat}
                             numColumns={2}
                             keyExtractor={item => item ._id}
-                            renderItem={({ item }) =>   <Word word={item.word} image={item.imageUri} />
+                            renderItem={({ item }) => <Word
+                                word={item.word}
+                                image={item.imageUri}
+                                partOfSpeech={item.partOfSpeech}
+                                handlePress={handlePress}
+                                definition={item.definition}
+                                examples={item.examples}
+                                learned={item.learned}
+                                _id={item._id}
+                            />
                             }
                         />
 
