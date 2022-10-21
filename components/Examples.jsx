@@ -7,7 +7,6 @@ export const Examples = ({ examples, setExamples }) => {
     
     const handleAdd = () => {
         const lastId =examples.length > 0 ? examples[examples.length - 1].id : 0 
-        console.log(lastId)
         setExamples([...examples, {text:'new example', edit: true, id: lastId +1}])
     }
 

@@ -45,7 +45,6 @@ export const useWord = ({navigation}) => {
                             }}
                         )
                         .then(res => {
-                            console.log(res.data)
                             auth.getWords()
                             navigation.navigate('My Words')
                             setLoading(false);
@@ -60,7 +59,6 @@ export const useWord = ({navigation}) => {
                 });
                 return;
             };
-            console.log(word)
 
             axios
                 .post(`${API_URL}/api/words/add`, {

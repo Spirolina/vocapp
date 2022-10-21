@@ -6,19 +6,7 @@ import Word from '../components/Word';
 
 export const MyWords = ({navigation}) => {
     const auth = useContext(AuthContext);
-    const [count, setCount] = useState(0)
-    React.useEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <TouchableOpacity
-                    style={styles.filter}
-                onPress={() => setCount((c) => c + 1)} 
-                >
-                    <Icon name='filter' color='#fff' size={30} />
-                </TouchableOpacity>
-          ),
-        });
-    }, [navigation]);
+    
 
     const handlePress = (_id) => {
         let currentId = 0

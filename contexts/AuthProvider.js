@@ -21,8 +21,6 @@ export const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       const userStr = await AsyncStorage.getItem('user')
       const tokenStr = await AsyncStorage.getItem('token')
-      console.log(userStr);
-      console.log(tokenStr);
       if (tokenStr && userStr) {
         setUser(JSON.parse(userStr))
         setToken(JSON.parse(tokenStr))

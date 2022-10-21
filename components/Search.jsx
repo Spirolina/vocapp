@@ -21,7 +21,6 @@ export const Search = ({navigation}) => {
         example={myWord.definitions[0].example}
 
     />)
-    console.log(words)
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
