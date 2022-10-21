@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {API_URL} from "@env"
+import {API_URL, ACCESS_KEY, SECRET_KEY} from "@env"
 import axios from 'axios';
 import { RNS3 } from 'react-native-aws3';
 import uuid from 'react-native-uuid';
@@ -27,8 +27,8 @@ export const useWord = ({navigation}) => {
                     keyPrefix: "uploads/",
                     bucket: "vocapp-spiriolina",
                     region: "eu-central-1",
-                    accessKey: "AKIAQLWKAH4YCVCIKLCX",
-                    secretKey: "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",
+                    accessKey: ACCESS_KEY,
+                    secretKey: SECRET_KEY,
                     successActionStatus: 201
                 };
 
